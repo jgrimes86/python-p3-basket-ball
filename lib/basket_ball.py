@@ -182,3 +182,68 @@ def game_dict():
             ]
         }
     }
+
+def get_all_players():
+    all_player_objects = game_dict()["home"]["players"] + game_dict()["away"]["players"]
+    return all_player_objects
+
+def player_stats(name):
+    one_player_list = [player for player in get_all_players() if player["name"] == name]
+    one_player = one_player_list[0]
+    return one_player
+
+def home_or_away(team_name):
+    if team_name == game_dict()["home"]["team_name"]:
+        return "home"
+    else:
+        return "away"
+
+def num_points_per_game(name):
+    player = player_stats(name)
+    points = player["points_per_game"]
+    return points
+
+def player_age(name):
+    player = player_stats(name)
+    age = player["age"]
+    return age
+
+def team_colors(team):
+    colors_list = game_dict()[home_or_away(team)]["colors"]
+    return colors_list
+
+def team_names():
+    name_list = [game_dict()["home"]["team_name"], game_dict()["away"]["team_name"]]
+    return name_list
+
+def player_numbers(team):
+    player_list = game_dict()[home_or_away(team)]["players"]
+    numbers_list = [player["number"] for player in player_list]
+    return numbers_list
+
+def average_rebounds_by_shoe_brand():
+    all_nike_rebounds = [player["rebounds_per_game"] for player in get_all_players() if player["shoe_brand"] == "Nike"]
+    sum_of_nikes = sum(all_nike_rebounds, 0)
+    num_of_nikes = len(all_nike_rebounds)
+    nike_average = "{:.2f}".format(sum_of_nikes / num_of_nikes)
+    print(f"Nike:  {nike_average}")
+
+    all_adidas_rebounds = [player["rebounds_per_game"] for player in get_all_players() if player["shoe_brand"] == "Adidas"]
+    sum_of_adidas = sum(all_adidas_rebounds, 0)
+    num_of_adidas = len(all_adidas_rebounds)
+    adidas_average = "{:.2f}".format(sum_of_adidas / num_of_adidas)
+    print(f"Adidas:  {adidas_average}")
+
+    all_puma_rebounds = [player["rebounds_per_game"] for player in get_all_players() if player["shoe_brand"] == "Puma"]
+    sum_of_pumas = sum(all_puma_rebounds, 0)
+    num_of_pumas = len(all_puma_rebounds)
+    puma_average = "{:.2f}".format(sum_of_pumas / num_of_pumas)
+    print(f"Puma:  {puma_average}")
+
+    all_jordan_rebounds = [player["rebounds_per_game"] for player in get_all_players() if player["shoe_brand"] == "Jordan"]
+    sum_of_jordans = sum(all_jordan_rebounds, 0)
+    num_of_jordans = len(all_jordan_rebounds)
+    jordan_average = "{:.2f}".format(sum_of_jordans / num_of_jordans)
+    print(f"Jordan:  {jordan_average}")
+
+average_rebounds_by_shoe_brand()
